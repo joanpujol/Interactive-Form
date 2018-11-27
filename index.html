@@ -22,9 +22,11 @@
         <legend>Basic Info</legend>
 
         <label for="name">Name:</label>
+        <span id="name-error" class="error-message"></span>
         <input type="text" id="name" name="user_name">
 
         <label for="mail">Email:</label>
+        <span id="mail-error" class="error-message"></span>
         <input type="email" id="mail" name="user_email">
 
         <div>
@@ -65,7 +67,7 @@
           </select>
         </div>
 
-        <div id="colors-js-puns" class="">
+        <div id="colors-js-puns" class="colors">
           <label for="color">Color:</label>
           <select id="color">
             <option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
@@ -80,13 +82,16 @@
 
       <fieldset class="activities">
         <legend>Register for Activities</legend>
-        <label><input type="checkbox" name="all"> Main Conference — $200</label>
-        <label><input type="checkbox" name="js-frameworks"> JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="js-libs"> JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100</label>
-        <label><input type="checkbox" name="express"> Express Workshop — Tuesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>
-        <label><input type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
+        <span id="activities-error" class="error-message"></span>
+        <div class="activitties-checkbox">
+          <label><input type="checkbox" name="all"> Main Conference — $200</label>
+          <label><input type="checkbox" name="js-frameworks"> JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100</label>
+          <label><input type="checkbox" name="js-libs"> JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100</label>
+          <label><input type="checkbox" name="express"> Express Workshop — Tuesday 9am-12pm, $100</label>
+          <label><input type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>
+          <label><input type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
+          <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
+        </div>
 
       </fieldset>
       <h3 class="total-price"></h3>
@@ -105,16 +110,19 @@
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
+            <span id="cc-num-error" class="error-message"></span>
         	  <input id="cc-num" name="user_cc-num" type="text">
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
+            <span id="zip-error" class="error-message"></span>
             <input id="zip" name="user_zip" type="text">
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
+            <span id="cvv-error" class="error-message"></span>
             <input id="cvv" name="user_cvv" type="text">
           </div>
 
