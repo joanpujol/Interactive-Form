@@ -11,8 +11,8 @@ $("input[id=other-title]").hide();
 
 // A text field will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
 $("select[id=title]").on('change', function () {
-  const valueSelected = $(this).val();
-  if (valueSelected === "other") {
+  const $valueSelected = $(this).val();
+  if ($valueSelected === "other") {
     $("input[id=other-title]").show();
   } else {
     $("input[id=other-title]").hide();
@@ -65,7 +65,7 @@ function showDesignColorSection(bool) {
 
 // *** ”Register for Activities” section ***
 
-// This part models the activiies section as a collection of "activity objects" stored inside "activityList"
+// This part models the activities section as a collection of "activity objects" stored inside "activityList"
 const activityList = (function() {
   const activityTimeRegex = /[A-Za-z]+ \d+[ap]m-\d+[ap]m/g;
   const activityPriceRegex = /\$\d+/g; //includes dollar sign
@@ -139,16 +139,16 @@ function enableOverlappingActivities(clickedActivity) {
 
 // Displays payment sections based on the payment option chosen in the select menu.
 $("select[id=payment]").on('change', function () {
-  const valueSelected = $(this).val();
-  if (valueSelected === "credit card") {
+  const $valueSelected = $(this).val();
+  if ($valueSelected === "credit card") {
     $(".credit-card").show();
     $(".paypal").hide();
     $(".bitcoin").hide();
-  } else if (valueSelected === "paypal") {
+  } else if ($valueSelected === "paypal") {
     $(".credit-card").hide();
     $(".paypal").show();
     $(".bitcoin").hide();
-  } else if (valueSelected === "bitcoin") {
+  } else if ($valueSelected === "bitcoin") {
     $(".credit-card").hide();
     $(".paypal").hide();
     $(".bitcoin").show();
