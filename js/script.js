@@ -40,13 +40,13 @@ $("select[id=design]").on('change', function () {
   const valueSelected = $(this).val();
   if (valueSelected === "js puns") {
     showDesignColorSection(true);
-    jspunsList.forEach(colorOption => colorOption.show());
-    heartjsList.forEach(colorOption => colorOption.hide());
+    jspunsList.forEach($colorOption => $colorOption.show());
+    heartjsList.forEach($colorOption => $colorOption.hide());
     $("select[id=color]").val("cornflowerblue");
   } else if (valueSelected === "heart js") {
     showDesignColorSection(true);
-    jspunsList.forEach(colorOption => colorOption.hide());
-    heartjsList.forEach(colorOption => colorOption.show());
+    jspunsList.forEach($colorOption => $colorOption.hide());
+    heartjsList.forEach($colorOption => $colorOption.show());
     $("select[id=color]").val("tomato");
   } else {
     showDesignColorSection(false);
@@ -84,8 +84,8 @@ const activityList = (function() {
     let priceString = originalText.match(activityPriceRegex).toString();
     activityObject.price = parseInt(priceString.substring(1, priceString.length));
 
-    activityObject.labelReference = $(this);
-    activityObject.inputReference = $(this).children(":first")
+    activityObject.$labelReference = $(this);
+    activityObject.$inputReference = $(this).children(":first")
 
     activityList.push(activityObject);
   });
@@ -119,8 +119,8 @@ function getClickedActivity(clickedActivityName) {
 function disableOverlappingActivities(clickedActivity) {
   activityList.forEach(activity => {
     if (activity.name !== clickedActivity.name && activity.time === clickedActivity.time ) {
-      activity.labelReference.css("color", "grey");
-      activity.inputReference.prop( "disabled", true);
+      activity.$labelReference.css("color", "grey");
+      activity.$inputReference.prop( "disabled", true);
     }
   });
 }
@@ -129,8 +129,8 @@ function disableOverlappingActivities(clickedActivity) {
 function enableOverlappingActivities(clickedActivity) {
   activityList.forEach(activity => {
     if (activity.name !== clickedActivity.name && activity.time === clickedActivity.time ) {
-      activity.labelReference.css("color", "black");
-      activity.inputReference.prop( "disabled", false);
+      activity.$labelReference.css("color", "black");
+      activity.$inputReference.prop( "disabled", false);
     }
   });
 }
@@ -193,6 +193,8 @@ $("input[id=mail]").on('keyup', function() {
 // If any validation errors exist, the user is prevented from submitting the form and
 // some kind of indication is provided when there’s a validation error.
 $("form").submit( function(event) {
+
+  // Validates name input once form is submited
   let $nameInput = $("input[id=name]");
   if(!isValidName($nameInput.val())) {
     event.preventDefault();
@@ -203,6 +205,7 @@ $("form").submit( function(event) {
     $nameInput.removeClass("error");
   }
 
+  // Validates email input once form is submited
   let $emailInput = $("input[id=mail]");
   if(!isValidEmail($emailInput.val())) {
     event.preventDefault();
@@ -213,6 +216,7 @@ $("form").submit( function(event) {
     $emailInput.removeClass("error");
   }
 
+  // Validates that at least one activity is checked
   let $activitiesError = $("#activities-error");
   let $activitiesCheckbox = $(".activitties-checkbox");
   if(isOneActivityChecked()) {
@@ -224,6 +228,7 @@ $("form").submit( function(event) {
     $activitiesCheckbox.addClass("error");
   }
 
+  // Checks if the payment option is credit card and if the credit card is valid, if not the form can't be submited
   if ($("#payment").val() === "credit card" && !isValidCreditCard()) {
     event.preventDefault();
   }
@@ -247,7 +252,7 @@ function isValidEmail(email) {
 function isOneActivityChecked() {
   let isOneActivityChecked = false;
   activityList.forEach(activity => {
-    if (activity.inputReference.is(':checked')) {
+    if (activity.$inputReference.is(':checked')) {
       isOneActivityChecked = true;
     }
   });
@@ -262,7 +267,10 @@ function isValidCreditCard() {
   $creditCardCVV = $("input[id=cvv]");
 
   let returnValue = true;
+
   const $ccNumberError = $("#cc-num-error");
+
+  //Validates credit card number
   if(isNumberAndMatchesLength($creditCardNumber.val(), 13, 16)) {
     $ccNumberError.text("");
     $creditCardNumber.removeClass("error");
@@ -276,7 +284,10 @@ function isValidCreditCard() {
     $creditCardNumber.addClass("error");
     returnValue = false;
   }
+
   const $zipError = $("#zip-error");
+
+  // Validates credit card zip number
   if(isNumberAndMatchesLength($creditCardZipCode.val(), 5, 5)) {
     $zipError.text("");
     $creditCardZipCode.removeClass("error");
@@ -285,7 +296,10 @@ function isValidCreditCard() {
     $creditCardZipCode.addClass("error");
     returnValue = false;
   }
+
   const $cvvError = $("#cvv-error");
+
+  // Validates credit card CVV number
   if(isNumberAndMatchesLength($creditCardCVV.val(), 3, 3)) {
     $cvvError.text("");
     $creditCardCVV.removeClass("error");
@@ -299,5 +313,11 @@ function isValidCreditCard() {
 
 // Helper function to check that a number that matches a certain length is provided
 function isNumberAndMatchesLength(number, min, max) {
-  return (/\d+/.test(number) && number.toString().length >= min && number.toString().length <= max)
+  // Credit to Jeff Hillman for providing a regex to match special symbols
+  // Source: https://stackoverflow.com/questions/8359566/regex-to-match-symbols
+  if(/[a-zA-Z-!¡$%^&*()_+|~=`{}\[\]:";'<>?¿,.\/]/.test(number)) {
+    return false;
+  } else {
+    return (/\d+/.test(number) && number.toString().length >= min && number.toString().length <= max);
+  }
 }
