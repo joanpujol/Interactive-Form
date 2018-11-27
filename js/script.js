@@ -224,7 +224,7 @@ $("form").submit( function(event) {
     $activitiesCheckbox.addClass("error");
   }
 
-  if(!($("#payment").val() === "credit card" && isValidCreditCard())) {
+  if ($("#payment").val() === "credit card" && !isValidCreditCard()) {
     event.preventDefault();
   }
 });
